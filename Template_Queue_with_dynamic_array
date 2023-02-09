@@ -1,0 +1,105 @@
+#include <bits/stdc++.h>
+using namespace std;
+template <class T>
+class Queue
+{
+public:
+    T *a;
+    int sz;
+    int start, end, array_cap;
+    Queue()
+    {
+        a = new T[1];
+        array_cap = 1;
+        start = 0;
+        end = -1;
+        sz = 0;
+    }
+    void increase_size()
+    {
+        T *tmp = new T[array_cap * 2];
+        for (int i = 0; i < array_cap; i++)
+        {
+            tmp[i] = a[i];
+        }
+        swap(tmp, a);
+        array_cap *= 2;
+        delete[] tmp;
+    }
+    void enque(T value)
+    {
+        if (sz == array_cap)
+        {
+            increase_size();
+        }
+        end++;
+        if (end == array_cap)
+        {
+            end = 0;
+        }
+        a[end] = value;
+        sz++;
+    }
+    void dequeue()
+    {
+        if (sz == 0)
+        {
+            cout << "Queue is empty !!!! \n";
+            return;
+        }
+        start++;
+        if (start == array_cap)
+        {
+            start = 0;
+        }
+        sz--;
+    }
+    T front()
+    {
+        if (sz == 0)
+        {
+            cout << "Queue is empty !!!! \n";
+            T x;
+            return x;
+        }
+        return a[start];
+    }
+    int getsize()
+    {
+        return sz;
+    }
+};
+int main()
+{
+    Queue<int> q;
+    q.enque(1);
+    q.enque(3);
+    q.enque(5);
+    cout << "size :" << q.getsize() << "\n";
+    cout << q.front() << "\n";
+    q.dequeue();
+    cout << q.front() << "\n";
+    q.dequeue();
+    cout << q.front() << "\n";
+    q.dequeue();
+    cout << "size :" << q.getsize() << "\n";
+    cout << "\n\n\n";
+    
+    Queue<char> cq;
+    cq.enque('A');
+    cq.enque('r');
+    cq.enque('i');
+    cq.enque('f');
+    cout << "size :" << cq.getsize() << "\n";
+    cout << cq.front() << "\n";
+    cq.dequeue();
+    cout << cq.front() << "\n";
+    cq.dequeue();
+    cout << cq.front() << "\n";
+    cq.dequeue();
+    cout << cq.front() << "\n";
+    cq.dequeue();
+    cout << "size :" << cq.getsize() << "\n";
+
+    return 0;
+}
